@@ -22,7 +22,7 @@ class ProviderSessionTest {
 
     @Before
     fun configure() {
-        session = SessionFacade(DummySessionRepository())
+        session = Session(DummySessionRepository())
     }
 
     @Test

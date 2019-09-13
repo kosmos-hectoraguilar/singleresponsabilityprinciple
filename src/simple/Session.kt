@@ -19,7 +19,24 @@ class Session(val repository: ISessionRepository) : ISession {
         data[ISessionRepository.PASSWORD_PARAM] = password
         data[ISessionRepository.TYPE_PARAM] = type
 
-        return repository.insertUser(data)
+        print(otherData)
+
+        var isNumber = false
+        try {
+            password.toInt()
+        } catch (e: Exception) {
+            isNumber = true
+        }
+
+        if (password == "" || isNumber == false || password.length < 5) {
+            return false
+        } else if (otherData.isNullOrEmpty() || otherData.get(ISessionRepository.PHONE_PARAM).toString().length > 11 ||
+            otherData.get(ISessionRepository.PHONE_PARAM).toString() == "" ||
+            otherData.get(ISessionRepository.PHONE_PARAM).toString().matches(Regex("[0-9]<10")) == false) {
+            return false
+        }else{
+            return repository.insertUser(data)
+        }
     }
 }
 
